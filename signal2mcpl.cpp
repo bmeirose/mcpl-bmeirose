@@ -1,7 +1,7 @@
 // Converts NNBAR signal file to mcpl file
 // author: B. Meirose
 // Dependencies: mcpl.c, mcpl.h
-//Usage: Compile: g++ -o signal2mcpl signal2mcpl.cpp mcpl.c ; 
+//Usage: Compile: g++ -o signal2mcpl signal2mcpl.cpp mcpl.c
 //Run:./signal2mcpl
 #include "mcpl.h"
 #include <iostream>
