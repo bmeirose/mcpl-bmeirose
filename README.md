@@ -1,6 +1,10 @@
 # Contents of MCPL directory
 
 This directory is a collection of useful MCPL codes for NNBAR. For MCPL see: https://mctools.github.io/mcpl/
+For the two executable files (signal2mcpl and pymcpltool) run first:
+
+$ chmod 777 pymcpltool
+$ chmod 777 signal2mcpl (or alternatively, compile it locally)
 
 List of files:
 
