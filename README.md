@@ -11,7 +11,7 @@ List of files:
 
 Some useful quick MCPL tips (taken from the MCPL documentation):
 
-- ./pymcpltool --stats --> statistical information about the MCPL file
+- ./pymcpltool --stats myfile.mcpl --> statistical information about the MCPL file
 - ./pymcpltool myfile.mcpl --> default check of MCPL files, shows first 10 particles by default
 - ./pymcpltoll -l100 myfile.mcpl --> to check 100 particles, change number for more particles
 - ./pymcpltool --stats --pdf myfile.mcpl --> MCPL makes plots of all quantities (needs python library matplotlib)
