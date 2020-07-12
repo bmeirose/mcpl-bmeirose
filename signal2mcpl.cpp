@@ -13,7 +13,7 @@ void convert2mcpl()
   ifstream in;
 
   // File data.txt in local directory
-  in.open("/home/bmeirose/DATA/nbar_C_dat_100k_McStas_converted.dat", ios::in); // signal file - has 11 columns of float data
+  in.open("/home/bmeirose/DATA/nbar_C_dat_100k_McStas_converted_R50.dat", ios::in); // signal file - has 11 columns of float data
 
   // Variables in file
   float get_eventNumber, get_weight, get_x, get_y, get_z, get_vx, get_vy, get_vz, get_KE, get_time, get_spin_x, get_spin_y, get_spin_z;
@@ -33,7 +33,7 @@ void convert2mcpl()
    int pdgcode, get_PDG = 0;
 
     // Start mcpl conversion (see: https://mctools.github.io/mcpl/usage_c/#creating-mcpl-files)
-    mcpl_outfile_t f = mcpl_create_outfile("nbar_C_dat_100k_McStas_converted.mcpl");
+    mcpl_outfile_t f = mcpl_create_outfile("nbar_C_dat_100k_McStas_converted_R50.mcpl");
     mcpl_hdr_set_srcname(f,"nbar_C_dat_100k_McStas_converted.dat");
     mcpl_particle_t * p = mcpl_get_empty_particle(f);
     mcpl_hdr_add_comment(f,"NNBAR signal events (after annihilation)");
