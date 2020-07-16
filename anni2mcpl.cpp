@@ -1,8 +1,8 @@
-// Converts NNBAR signal file to mcpl file
+// Converts ANNI McStas file to mcpl file
 // author: B. Meirose
 // Dependencies: mcpl.c, mcpl.h
-//Usage: Compile: g++ -o signal2mcpl signal2mcpl.cpp mcpl.c
-//Run:./signal2mcpl
+//Usage: Compile: g++ -o anni2mcpl anni2mcpl.cpp mcpl.c
+//Run:./anni2mcpl
 #include "mcpl.h"
 #include <iostream>
 #include <cmath>
@@ -13,14 +13,15 @@ void convert2mcpl()
   ifstream in;
 
   // File data.txt in local directory
-  in.open("/home/bmeirose/DATA/nbar_C_dat_100k_McStas_converted_R50.dat", ios::in); // signal file - has 11 columns of float data
+  in.open("/home/bmeirose/DATA/new_anni_events.dat", ios::in);
 
   // Variables in file
-  float get_eventNumber, get_weight, get_x, get_y, get_z, get_vx, get_vy, get_vz, get_KE, get_time, get_spin_x, get_spin_y, get_spin_z;
+  float get_weight, get_x, get_y, get_z, get_vx, get_vy, get_vz, get_time, get_spin_x, get_spin_y, get_spin_z;
   
   //Variables created
   float get_modulus;
   float get_unit;
+  float get_energy;
 
    // Initilize variables
    float direction[3] = {0,0,0};
@@ -30,20 +31,21 @@ void convert2mcpl()
    float time = 0.;
    float weight = 0.;
    //unsigned long long pdgcode, get_PDG = 0;
-   int pdgcode, get_PDG = 0;
+   int pdgcode = 2112;
+   int get_PDG = 2112;
 
     // Start mcpl conversion (see: https://mctools.github.io/mcpl/usage_c/#creating-mcpl-files)
-    mcpl_outfile_t f = mcpl_create_outfile("nbar_C_dat_100k_McStas_converted_R50.mcpl");
-    mcpl_hdr_set_srcname(f,"nbar_C_dat_100k_McStas_converted_R50.dat");
+    mcpl_outfile_t f = mcpl_create_outfile("new_anni_events.mcpl");
+    mcpl_hdr_set_srcname(f,"new_anni_events.dat");
     mcpl_particle_t * p = mcpl_get_empty_particle(f);
-    mcpl_hdr_add_comment(f,"NNBAR signal events (after annihilation)");
+    mcpl_hdr_add_comment(f,"ANNI MCSats simulation");
     mcpl_enable_polarisation(f);
 
    while (1)  // infinite loop
    {
-      // Read data poinst from file
-      in >> get_eventNumber >> get_PDG >> get_weight >> get_x >> get_y >> get_z >> get_vx >> get_vy >> get_vz >> get_KE >> get_time 
-      >> get_spin_x >> get_spin_y >> get_spin_z;
+      // Read data poinst from file   
+      in >> get_weight >> get_x >> get_y >> get_z >> get_vx >> get_vy >> get_vz >> get_time >> get_spin_x >> get_spin_y >> get_spin_z; //ANNI
+
 
       if (!in.good()) break;
 
@@ -55,8 +57,8 @@ void convert2mcpl()
       // Time:
       get_time = get_time*1.0e3; // converting time to milliseconds
 
-      // Neutron Energy in MeV:
-      //get_energy = 0.83746*1.0e-27*(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2))*6.242*1.0e12;
+      //Neutron Energy in MeV:
+      get_energy = 0.83746*1.0e-27*(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2))*6.242*1.0e12;
 
       // Unit vectors in all directions:
       get_modulus = sqrt(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2));
@@ -89,7 +91,7 @@ void convert2mcpl()
       if(get_PDG = 100006090){   
       cout << fixed << " get_PDG = " << get_PDG << endl;}
       */
-      p->ekin=get_KE;
+      p->ekin=get_energy;
       p->time=get_time;
       p->pdgcode=get_PDG;
       p->weight=get_weight;
