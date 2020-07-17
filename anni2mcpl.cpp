@@ -58,7 +58,7 @@ void convert2mcpl()
       get_time = get_time*1.0e3; // converting time to milliseconds
 
       //Neutron Energy in MeV:
-      get_energy = 0.83746*1.0e-27*(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2))*6.242*1.0e12;
+      get_energy = 0.83746*1.0e-27*6.242*1.0e12*(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2));
 
       // Unit vectors in all directions:
       get_modulus = sqrt(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2));
