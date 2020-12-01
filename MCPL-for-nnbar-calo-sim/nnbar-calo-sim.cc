@@ -125,7 +125,8 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(actionInitialization);   
 
   // MCPL file
-  runManager->SetUserAction(new G4MCPLGenerator("nbar_C_dat_100k_McStas_converted.mcpl"));
+  //runManager->SetUserAction(new G4MCPLGenerator("nbar_C_dat_100k_McStas_converted.mcpl")); // signal
+  runManager->SetUserAction(new G4MCPLGenerator("cross_photon_eng_RAD_BIN_dmp.mcpl")); // gamma background
   runManager->Initialize();
   //runManager->BeamOn(std::numeric_limits<G4int>::max());  // crashes  
   runManager->BeamOn(10000);  // total particles: 804968

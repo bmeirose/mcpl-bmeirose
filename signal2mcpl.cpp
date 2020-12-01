@@ -13,10 +13,11 @@ void convert2mcpl()
   ifstream in;
 
   // File data.txt in local directory
-  in.open("/home/bmeirose/DATA/nbar_C_dat_100k_McStas_converted_R50.dat", ios::in); // signal file - has 11 columns of float data
+  //in.open("/home/bmeirose/DATA/nbar_C_dat_100k_McStas_converted_corrected.dat", ios::in); // signal file - has 11 columns of float data
+  in.open("nbar_C_dat_100k_McStas_converted_corrected.dat", ios::in); // signal file - has 11 columns of float data
 
   // Variables in file
-  float get_eventNumber, get_weight, get_x, get_y, get_z, get_vx, get_vy, get_vz, get_KE, get_time, get_spin_x, get_spin_y, get_spin_z;
+  float get_eventNumber, get_mass, get_weight, get_x, get_y, get_z, get_nx, get_ny, get_nz, get_KE, get_PT, get_time, get_spin_x, get_spin_y, get_spin_z;
   
   //Variables created
   float get_modulus;
@@ -33,8 +34,8 @@ void convert2mcpl()
    int pdgcode, get_PDG = 0;
 
     // Start mcpl conversion (see: https://mctools.github.io/mcpl/usage_c/#creating-mcpl-files)
-    mcpl_outfile_t f = mcpl_create_outfile("nbar_C_dat_100k_McStas_converted_R50.mcpl");
-    mcpl_hdr_set_srcname(f,"nbar_C_dat_100k_McStas_converted_R50.dat");
+    mcpl_outfile_t f = mcpl_create_outfile("nbar_C_dat_100k_McStas_converted_corrected.mcpl");
+    mcpl_hdr_set_srcname(f,"nbar_C_dat_100k_McStas_converted_corrected.dat");
     mcpl_particle_t * p = mcpl_get_empty_particle(f);
     mcpl_hdr_add_comment(f,"NNBAR signal events (after annihilation)");
     mcpl_enable_polarisation(f);
@@ -42,8 +43,8 @@ void convert2mcpl()
    while (1)  // infinite loop
    {
       // Read data poinst from file
-      in >> get_eventNumber >> get_PDG >> get_weight >> get_x >> get_y >> get_z >> get_vx >> get_vy >> get_vz >> get_KE >> get_time 
-      >> get_spin_x >> get_spin_y >> get_spin_z;
+      in >> get_eventNumber >> get_PDG >> get_mass >> get_weight >> get_x >> get_y >> get_z >> get_nx >> get_ny >> get_nz >> get_KE 
+      >> get_PT >> get_time >> get_spin_x >> get_spin_y >> get_spin_z;
 
       if (!in.good()) break;
 
@@ -56,16 +57,8 @@ void convert2mcpl()
       get_time = get_time*1.0e3; // converting time to milliseconds
 
       // Neutron Energy in MeV:
-      //get_energy = 0.83746*1.0e-27*(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2))*6.242*1.0e12;
+      //get_energy = 0.83746*1.0e-27*(pow(get_nx,2)+pow(get_ny,2)+pow(get_nz,2))*6.242*1.0e12;
 
-      // Unit vectors in all directions:
-      get_modulus = sqrt(pow(get_vx,2)+pow(get_vy,2)+pow(get_vz,2));
-      //if (get_modulus != 0){
-      get_vx=get_vx/get_modulus;  
-      get_vy=get_vy/get_modulus;
-      get_vz=get_vz/get_modulus;
-      //}
-     
       /*
       Tune file options or add custom comments or
       binary data into the header:
@@ -79,9 +72,11 @@ void convert2mcpl()
                        my_datalength, my_databuf)
       **/
 
-      p->direction[0] = get_vx;
-      p->direction[1] = get_vy;
-      p->direction[2] = get_vz;
+      // Unit vectors in all directions:
+      p->direction[0] = get_nx;
+      p->direction[1] = get_ny;
+      p->direction[2] = get_nz;
+      // Positions:
       p->position[0]=get_x;
       p->position[1]=get_y;
       p->position[2]=get_z;

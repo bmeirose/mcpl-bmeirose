@@ -13,7 +13,14 @@ Some useful quick MCPL tips (taken from the MCPL documentation):
 
 - ./pymcpltool --stats myfile.mcpl --> statistical information about the MCPL file
 - ./pymcpltool myfile.mcpl --> default check of MCPL files, shows first 10 particles by default
-- ./pymcpltoll -l100 myfile.mcpl --> to check 100 particles, change number for more particles
+- ./pymcpltool -l100 myfile.mcpl --> to check 100 particles, change number for more particles
 - ./pymcpltool --stats --pdf myfile.mcpl --> MCPL makes plots of all quantities (needs python library matplotlib)
 - ./pymcpltool --stats --gui myfile.mcpl --> MCPL makes plots of all quantities and show then in a GUI (needs python library matplotlib)
+
+
+Using plotter.py
+
+1) Prepare output file: ./pymcpltool -l100 myfile.mcpl > myfile.out
+2) Clean it with: sed -i '1,24d' myfile.out
+3) Upload it in plotter.py: data_set = np.loadtxt("/home/bmeirose/DATA/myfile.out")
 
